@@ -66,3 +66,54 @@ unschönfinkel f (x,y) = f x y
 
 -- uncurry (+) (2, 3)
 -- 5
+
+-- There are no functions of multiple arguments in Haskell.
+
+foobar :: [Integer] -> Integer
+foobar [] = 0
+foobar (x:xs)
+    | x > 3 = (7*x + 2) + foobar xs
+    | otherwise = foobar xs
+-- not good Haskell style. Doing too much at once and working at too low of a level.
+
+foobar' :: [Integer] -> Integer
+foobar' = sum . map (\x -> 7*x + 2) . filter (>3)
+-- pipelines of three functions
+
+-- Folds
+
+sum' :: [Integer] -> Integer
+sum' [] = 0
+sum' (x:xs) = x + sum' xs
+
+product' :: [Integer] -> Integer
+product' [] = 0
+product' (x:xs) = x * product' xs
+
+length' :: [a] -> Int
+length' [] = 0
+length' (x:xs) = 1 + length' xs
+
+fold :: b -> (a -> b -> b) -> [a] -> b
+fold z f [] = z
+fold z f (x:xs) = f x (fold z f xs)
+
+-- fold f z [a,b,c] == a `f` (b `f` ( c `f` z))
+
+sum'' = fold 0 (+)
+product'' = fold 1 (*)
+length'' = fold 0 (\_ s -> 1 + s)
+-- length'' = fold 0 (\_ -> (1+))
+-- length'' = fold 0 (const (1+))
+
+-- some Prelude functions which are defined in terms of foldr
+-- length :: [a] -> Int
+-- sum :: Num a => [a] -> a
+-- product :: Num a => [a] -> a
+-- and :: [Bool] -> Bool
+-- or :: [Bool] -> Bool
+-- any :: (a -> Bool) -> [a] -> Bool
+-- all :: (a -> Bool) -> [a] -> Bool
+
+-- foldr fz [a,b,c] = a `f` (b `f` (c `f` z))
+-- foldl fz [a,b,c] = ((z `f` a) `f` b) `f` c
