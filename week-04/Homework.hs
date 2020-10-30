@@ -88,7 +88,7 @@ myFoldl f base xs = foldr (fn f) base xs
 -- prime numbers up to 2n + 2.
 
 sieveSundaram :: Integer -> [Integer]
-sieveSundaram n = takeWhile (< 2*n + 2) $ filter odd $ filter isPrime [1..]
+sieveSundaram n = takeWhile (<= 2*n + 2) $ filter odd $ filter isPrime [1..]
 
 -- some help: Cartesian product of two lists.
 
