@@ -42,8 +42,8 @@ instance Eq Foo where
 data Foo' = F' Int | G' Char
   deriving (Eq, Ord, Show)
 
--- tels GHC to automatically derive instances of the Eq, Ord, and Show type
--- classes for our data type Foo.
+-- tells GHC to automatically derive instances of 
+-- the Eq, Ord, and Show type classes for our data type Foo.
 
 -- Some standard type classes
 -- Ord, Num, Show, Read, Integral
